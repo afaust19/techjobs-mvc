@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org/"> <!--tells intellij that the file should conform to Thymleaf extension of xml (html)-->
 
-<head th:fragment="head">
+<head th:fragment="head"> <!--make a fragment ("chunk") of the entire head section - can call on this in other templates to reuse code-->
 
-    <!-- Bootstrap stylesheets and script -->
+    <!-- Bootstrap stylesheets and script -->  <!--links all Bootstrap CSS and javascript-->
     <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
     <link th:href="@{/css/techjobs.css}" rel="stylesheet" />
     <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 
     <title th:text="'TechJobs' + ${title == null ? '' : ' :: ' + title}">TechJobs</title>
-</head>
+</head>  <!--end "head" fragment-->
 
 <body>
 
-    <div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
+    <div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top"> <!--make a fragment of the page header to be shown at the top of every page (uses Bootstrap syntax)-->-->
         <div class="container">
             <div class="navbar-header">
                 <a th:href="@{/}" class="navbar-brand">TechJobs</a>

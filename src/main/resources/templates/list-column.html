@@ -1,22 +1,23 @@
+<!--this view is rendered by listColumnValues method within ListController class, displays jobs within a certain column-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
+<html xmlns:th="http://www.thymeleaf.org/"> <!--tells intellij that the file should conform to Thymleaf extension of xml (html)-->
+<head th:replace="fragments :: head"> <!--replace this head with whatever is in the head of the fragments.html file-->
 </head>
 <body>
 
-<div th:replace="fragments :: page-header"></div>
+<div th:replace="fragments :: page-header"></div> <!--make a fragment ("chunk") of the entire head section - can call on this in other templates to reuse code-->
 
 <div class="container body-content">
 
-    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+    <h1 th:text="${#strings.capitalizeWords(title)}"></h1> <!--"title" is passed into view from ListController, string method capitalizes the first letter of each word of 'title'-->
 
-    <div th:if="${items} and ${items.size()}">
+    <div th:if="${items} and ${items.size()}"> <!--items (ArrayList that lists all jobs in a particular column) is passed into view from ListController-->
 
-        <table>
-            <tr th:each="item, idx : ${items}" th:class="${idx.odd} ? 'odd'">
-                <td><a th:href="@{/list/jobs(column=${column},value=${item})}" th:text="${item}"></a></td>
-            </tr>
-        </table>
+        <table> <!--makes a table of links-->
+            <tr th:each="item, idx : ${items}" th:class="${idx.odd} ? 'odd'"> <!--iterates through items (ArrayList of all items within one column) and also adds a loop variable for that item's index; adds css element by labeling all odd values as the class 'odd'; in techjobs.css, this class is given a different background color (for stripe effect on webpage)-->
+                <td><a th:href="@{/list/jobs(column=${column},value=${item})}" th:text="${item}"></a></td> <!--make a hyperlink for that specific value-->
+            </tr>  <!--example of link: http://localhost:8080/list/jobs?column=location&value=Kansas%20City (contains two query parameter attributes - 1. column 2. value; %20 = space)-->
+        </table>   <!--after clicking on a link, user is routed to the listJobsByColumnAndValue handler in the ListController controller, which looks for this parameter-->
 
     </div>
 

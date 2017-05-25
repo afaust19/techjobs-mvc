@@ -1,40 +1,41 @@
+<!--this view is rendered by search method within SearchController class-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
+<html xmlns:th="http://www.thymeleaf.org/"> <!--tells intellij that the file should conform to Thymleaf extension of xml (html)-->
+<head th:replace="fragments :: head"> <!--replace this head with whatever is in the head of the fragments.html file-->
 </head>
 <body>
 
-<div th:replace="fragments :: page-header"></div>
+<div th:replace="fragments :: page-header"></div> <!--insert whatever is in the "page-header" of the fragments.html file-->
 
 <div class="container body-content">
 
-    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+    <h1 th:text="${#strings.capitalizeWords(title)}"></h1> <!--"title" is passed into view from SearchController, string method capitalizes the first letter of each word of 'title'-->
 
-    <form th:action="@{/search/results}">
+    <form th:action="@{/search/results}"> <!--creates a form that will route the user to /search/results-->
         <h2>Search by:</h2>
 
         <p>
-            <span th:each="column : ${columns}">
-                <input
-                        type="radio"
-                        name="searchType"
-                        th:id="${column.key}"
-                        th:value="${column.key}"
-                        th:checked="${column.key == 'all'}"/>
-                <label th:for="${column.key}" th:text="${column.value}"></label>
+            <span th:each="column : ${columns}"> <!-- columns (columnChoices) is passed into search.html from SearchController, iterates through columnChoices and fetches each key/value pair (e.g. employer, Employer)-->
+                <input <!--/*creates an input button for each column*/-->
+                        type="radio"     <!--/*sets the button type as radio (can only select one)*/-->
+                        name="searchType" <!--/*sets a name for the input so you can refer to it later (line 31)*/-->
+                        th:id="${column.key}" <!--/*sets the id to the column key (e.g. employer) so you can refer to it later in the code*/-->
+                        th:value="${column.key}" <!--/*sets the value to the column key (e.g. employer), gets passed to server upon submit*/-->
+                        th:checked="${column.key == 'all'}"/> <!--/*default selected value */-->
+                <label th:for="${column.key}" th:text="${column.value}"></label> <!--/*displays a label for the input as the column value (e.g. Location)*/-->
             </span>
 
         </p>
 
         <p>
-            <label for="searchTerm">Keyword:</label>
-            <input type="text" name="searchTerm" id="searchTerm" />
+            <label for="searchTerm">Keyword:</label> <!--sets a label ("Keyword") for the searchTerm input-->
+            <input type="text" name="searchTerm" id="searchTerm" /> <!--creates an input box with name searchTerm and id searchTerm-->
         </p>
 
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search" /> <!--creates a submit button-->
     </form>
 
-    <hr />
+    <hr /> <!--thematic break-->
 
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
 

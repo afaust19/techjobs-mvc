@@ -1,16 +1,17 @@
+<!--this view is rendered by index method within HomeController class-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
+<html xmlns:th="http://www.thymeleaf.org/"> <!--tells intellij that the file should conform to Thymleaf extension of xml (html)-->
+<head th:replace="fragments :: head"> <!--replace this head with whatever is in the head of the fragments.html file-->
 </head>
 <body>
 
-    <div th:replace="fragments :: page-header"></div>
+    <div th:replace="fragments :: page-header"></div> <!--insert whatever is in the "page-header" of the fragments.html file-->
 
     <div class="container body-content">
         <p>View jobs by:</p>
         <ul>
-            <li th:each="action : ${actions}">
-                <a th:href="@{'/' + ${action.key}}" th:text="${action.value}"></a>
+            <li th:each="action : ${actions}">  <!--actions is passed into index.html from HomeController, iterates over HashMap of actions key/value pairs (search/list) - in this case, there is only 1 key/value pair-->
+                <a th:href="@{'/' + ${action.key}}" th:text="${action.value}"></a> <!--make a link for both "list" and "search" by using the route /search and /list (links should be labeled Search and Link-->
             </li>
         </ul>
     </div>

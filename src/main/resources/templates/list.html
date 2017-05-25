@@ -1,19 +1,20 @@
+<!--this view is rendered by list method within ListController class-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head">
+<html xmlns:th="http://www.thymeleaf.org/"> <!--tells intellij that the file should conform to Thymleaf extension of xml (html)-->
+<head th:replace="fragments :: head"> <!--replace this head with whatever is in the head of the fragments.html file-->
 </head>
 <body>
 
-    <div th:replace="fragments :: page-header"></div>
+    <div th:replace="fragments :: page-header"></div> <!--insert whatever is in the "page-header" of the fragments.html file-->
 
     <div class="container body-content">
-        <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+        <h1 th:text="${#strings.capitalizeWords(title)}"></h1> <!--"title" is passed into view from ListController, string method capitalizes the first letter of each word of 'title'-->
         <h2>View All</h2>
         <ul>
-            <li th:each="column : ${columns}">
-                <a th:href="@{/list/values(column=${column.key})}" th:text="${column.value}"></a>
-            </li>
-        </ul>
+            <li th:each="column : ${columns}">  <!--ColumnChoices HashMap is passed into view from ListController (using 'list' method); for each column in columns (ColumnChoices), -->
+                <a th:href="@{/list/values(column=${column.key})}" th:text="${column.value}"></a> <!--make a link (with query parameters) to the the route /list/values(column=(name of column e.g core competency)), text of hyperlink is column's value (e.g. Skill)-->
+            </li>  <!--example of link: http://localhost:8080/list/values?column=location-->
+        </ul>      <!--after clicking on a link, user is routed to the listColumnValues handler in the ListController controller (because link is preceded by list/value), which looks for this parameter-->
     </div>
 
 </body>
