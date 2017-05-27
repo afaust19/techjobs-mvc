@@ -43,6 +43,18 @@ public class ListController { //class allows users to see lists of all values of
             ArrayList<HashMap<String, String>> jobs = JobData.findAll();  //create new ArrayList of HashMaps (jobs) by fetching all of the data from JobData class using method findAll
             model.addAttribute("title", "All Jobs"); //pass in title "All Jobs" to list-jobs template (view)
             model.addAttribute("jobs", jobs); //pass in jobs ArrayList of HashMaps to list-jobs template (view)
+
+            if (jobs.size() == 0) {
+                String listSizeMessage = "0 Result(s)";
+                model.addAttribute("listSizeMessage", listSizeMessage);
+
+            } else {
+                int listSize = jobs.size();
+                String listSizeMessage = listSize + " Result(s)";
+                model.addAttribute("listSizeMessage", listSizeMessage);
+
+            }
+
             return "list-jobs"; //renders list-jobs.html template; passes in any data between controller and view
 
         } else {
@@ -63,7 +75,7 @@ public class ListController { //class allows users to see lists of all values of
         ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(column, value); //makes a new ArrayList of HashMaps (jobs) by fetching data from JobData using findByColumnAndValue method (returns ArrayList of HashMaps (job entries - rows) that contain search-specific value ('Enterprise') from one particular column ('employer', etc.))
         model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value); //pass in title "Jobs with (employer, location, etc): (search term)" to view
         model.addAttribute("jobs", jobs); //pass in jobs (ArrayList of HashMaps)
-
+        model.addAttribute("listSize", jobs.size());
         return "list-jobs"; //renders list-jobs template
     }
 }
