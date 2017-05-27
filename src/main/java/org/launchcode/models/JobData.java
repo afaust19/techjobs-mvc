@@ -101,7 +101,7 @@ public class JobData {
      */
 
 
-    public static ArrayList<HashMap<String, String>> findByValue (String value)
+    public static ArrayList<HashMap<String, String>> findByValue(String value)
     { //method to return ArrayList of HashMaps (job entries - rows) that contains search-specific value ('Enterprise) from all columns ('employer', etc.)
 
         loadData(); // load data, if not already loaded

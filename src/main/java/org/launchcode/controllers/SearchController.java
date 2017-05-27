@@ -31,20 +31,30 @@ public class SearchController {
 
         //pass in parameters from search.html; first parameter specifies the type of search (e.g. all, employer, etc.), second parameter specifies the search term
         //don't need to specify GET or POST? Because the search.html view sends query parameters (type of search and search term) to search/results (you can find these values in the browser inspect elements (Network --> Headers)
-
         //look up the search results via the JobData class (findByColumnAndValue)
-        ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
 
-        // pass results into search.html view via the model
-        model.addAttribute("jobs", jobs);
+        if (searchType.equals("all")) {
 
-        //also need to pass ListController.columnChoices to the view, as the method above does --why?? just to display search form again?
-        model.addAttribute("columns", ListController.columnChoices);
+            ArrayList<HashMap<String, String>> jobs = JobData.findByValue(searchTerm);
+            model.addAttribute("jobs", jobs);
+            model.addAttribute("columns", ListController.columnChoices);
+            model.addAttribute("listSize", jobs.size());
 
-        model.addAttribute("listSize", jobs.size());
+            return "search";
 
-        return "search";
+        } else {
+            ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+
+            // pass results into search.html view via the model
+            model.addAttribute("jobs", jobs);
+
+            //also need to pass ListController.columnChoices to the view, as the method above does --why?? just to display search form again?
+            model.addAttribute("columns", ListController.columnChoices);
+
+            model.addAttribute("listSize", jobs.size());
+
+            return "search";
+        }
+
     }
 }
-
-//TODO: get Search keyword (all columns) working
