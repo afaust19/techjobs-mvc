@@ -38,6 +38,16 @@
     <hr /> <!--thematic break-->
 
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
+<!--displays alternating-striped table of job entries from a specific column with the search term; also displays the search bar above so that user can easily edit search-->
+
+        <table th:class="job-listing" th:each="job : ${jobs}">  <!--<head th:fragment="head">-->
+            <tbody>
+                <tr th:each="item : ${job}">
+                    <td th:text="${#strings.capitalizeWords(item.key)}"></td>
+                    <td th:text="${item.value}"></td>
+                </tr>
+            </tbody>
+        </table>
 
 </div>
 

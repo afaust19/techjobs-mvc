@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class ListController { //class allows users to see lists of all values of given data column (e.g. employer, location, etc.)
 
     static HashMap<String, String> columnChoices = new HashMap<>(); //creates new HashMap named columnChoices of string keys and string values;
+    public static Object listJobsByColumnAndValue;
 
     public ListController () {  //constructor - allows for data to be initialized
         columnChoices.put("core competency", "Skill"); //populate columnChoices wth key/value pairs
@@ -36,7 +37,7 @@ public class ListController { //class allows users to see lists of all values of
     }
 
     @RequestMapping(value = "values") //request path is '/values'
-    public String listColumnValues(Model model, @RequestParam String column) { // Model model is a way to package data from the controller to the client-side (view) column gets passed into method from ???? and is used to determine which values to fetch from JobData
+    public String listColumnValues(Model model, @RequestParam String column) { // Model model is a way to package data from the controller to the client-side (view); column gets passed into method from ???? and is used to determine which values to fetch from JobData
 
         if (column.equals("all")) { //if user chooses all columns,
             ArrayList<HashMap<String, String>> jobs = JobData.findAll();  //create new ArrayList of HashMaps (jobs) by fetching all of the data from JobData class using method findAll
