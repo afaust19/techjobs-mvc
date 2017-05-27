@@ -12,6 +12,15 @@
 
     <!-- TODO #3 - Use the same list display from search.html -->
 
+    <table th:class="job-listing" th:each="job : ${jobs}">  <!--<head th:fragment="head">-->
+        <tbody>
+        <tr th:each="item : ${job}">
+            <td th:text="${#strings.capitalizeWords(item.key)}"></td>
+            <td th:text="${item.value}"></td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 
 </body>
