@@ -38,9 +38,20 @@ public class SearchController {
             ArrayList<HashMap<String, String>> jobs = JobData.findByValue(searchTerm);
             model.addAttribute("jobs", jobs);
             model.addAttribute("columns", ListController.columnChoices);
-            model.addAttribute("listSize", jobs.size());
 
-            return "search";
+            model.addAttribute("buttonChoice", searchType); //passes in the input button the user selected in their search
+            model.addAttribute("keywordChoice", searchTerm);
+
+            if (jobs.size() == 0) {
+                String listSizeMessage = "0 Result(s)";
+                model.addAttribute("listSizeMessage", listSizeMessage);
+
+            } else {
+                int listSize = jobs.size();
+                String listSizeMessage = listSize + " Result(s)";
+                model.addAttribute("listSizeMessage", listSizeMessage);
+            }
+
 
         } else {
             ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
@@ -51,10 +62,23 @@ public class SearchController {
             //also need to pass ListController.columnChoices to the view, as the method above does --why?? just to display search form again?
             model.addAttribute("columns", ListController.columnChoices);
 
-            model.addAttribute("listSize", jobs.size());
+            model.addAttribute("buttonChoice", searchType); //passes in the input button the user selected in their search
+            model.addAttribute("keywordChoice", searchTerm);
 
-            return "search";
+            if (jobs.size() == 0) {
+                String listSizeMessage = "0 Result(s)";
+                model.addAttribute("listSizeMessage", listSizeMessage);
+
+            } else {
+                int listSize = jobs.size();
+                String listSizeMessage = listSize + " Result(s)";
+                model.addAttribute("listSizeMessage", listSizeMessage);
+
+            }
+
         }
 
+        return "search";
     }
+
 }

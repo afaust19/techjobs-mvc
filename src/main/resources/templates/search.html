@@ -21,7 +21,8 @@
                         name="searchType" <!--/*sets a name for the input so you can refer to it later (line 31)*/-->
                         th:id="${column.key}" <!--/*sets the id to the column key (e.g. employer) so you can refer to it later in the code*/-->
                         th:value="${column.key}" <!--/*sets the value to the column key (e.g. employer), gets passed to server upon submit*/-->
-                        th:checked="${column.key == 'all'}"/> <!--/*default selected value */-->
+                        th:checked="${buttonChoice == column.key}"/> <!--sets the selected value as the user's selected input for the search; buttonChoice is a boolean-->
+
                 <label th:for="${column.key}" th:text="${column.value}"></label> <!--/*displays a label for the input as the column value (e.g. Location)*/-->
             </span>
 
@@ -29,7 +30,7 @@
 
         <p>
             <label for="searchTerm">Keyword:</label> <!--sets a label ("Keyword") for the searchTerm input-->
-            <input type="text" name="searchTerm" id="searchTerm" /> <!--creates an input box with name searchTerm and id searchTerm-->
+            <input type="text" name="searchTerm" id="searchTerm" th:value="${keywordChoice}"/> <!--creates an input box with name searchTerm and id searchTerm-->
         </p>
 
         <input type="submit" value="Search" /> <!--creates a submit button-->
@@ -40,14 +41,29 @@
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
 <!--displays alternating-striped table of job entries from a specific column with the search term; also displays the search bar above so that user can easily edit search-->
 
+    <div th:fragment="display-results">
+
+        <h3 th:text="${listSizeMessage}"></h3>
+
         <table th:class="job-listing" th:each="job : ${jobs}">  <!--<head th:fragment="head">-->
-            <tbody>
-                <tr th:each="item : ${job}">
-                    <td th:text="${#strings.capitalizeWords(item.key)}"></td>
-                    <td th:text="${item.value}"></td>
-                </tr>
-            </tbody>
+                <tbody>
+                    <tr th:each="item : ${job}">
+
+                        <td th:text="${#strings.capitalizeWords(item.key)}"></td>
+
+                        <div th:if="${item.key} != 'name'">
+                            <td><a th:href="@{/list/jobs(column=${item.key},value=${item.value})}" th:text="${item.value}"></a></td>
+                        </div>
+
+                        <div th:if="${item.key} == 'name'">
+                            <td th:text="${item.value}"></td>
+                        </div>
+
+                    </tr>
+                </tbody>
         </table>
+
+    </div>
 
 </div>
 
